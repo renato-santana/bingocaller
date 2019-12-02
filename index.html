@@ -1,0 +1,48 @@
+<html>
+<body>
+<button onclick="javascript:draw();">SORTEAR</button>
+<p id="numbers" style="font-size: 25px"></p>
+
+</body>
+<script type="text/javascript">
+var maxNumbers = 90;
+var numbers = [];
+
+function draw()
+{
+	var i = 0;
+	var possibleNumbers = [];
+	for (i = 1; i <= maxNumbers; i++) {
+		if (!numbers.includes(i)) {
+			possibleNumbers.push(i);
+		}					
+	}	
+
+	if (possibleNumbers.length == 0) {
+		alert("FIM");
+		return;
+	}
+	
+	index = Math.floor(Math.random() * possibleNumbers.length);
+	number = possibleNumbers[index];
+	numbers.push(number);	
+	numbersElement = document.getElementById('numbers');
+	numbersElement.innerHTML = numbersElement.innerHTML + '  ' + number.toString();
+	
+	speak(number.toString());
+}
+
+function speak(text)
+{
+	var speaker = new SpeechSynthesisUtterance();
+	speaker.text = text;
+    
+	//voices = window.speechSynthesis.getVoices();
+	speaker['voiceURI'] = 'Google português do Brasil'; //discovered after dumping getVoices()
+	speaker.lang = "pt-BR";
+	speaker['localService'] = true;
+	speechSynthesis.speak(speaker);
+}
+
+</script>
+</html>
